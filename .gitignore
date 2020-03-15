@@ -224,3 +224,9 @@ theforgottenserver.exe
 zlib1.dll
 realmap.otbm
 map.rar
+
+#tfs executables and configuration files
+tfs
+config.lua
+key.pem
+
