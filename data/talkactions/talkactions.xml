@@ -56,6 +56,8 @@
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 	<talkaction words="!addon" script="addon.lua" />
+	<talkaction words="!position" script="position.lua" />
+	<talkaction words="!teleport" separator=" " script="teleport.lua" />
 
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />
