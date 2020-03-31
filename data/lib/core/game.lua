@@ -3,13 +3,12 @@ if not globalStorageTable then
 end
 
 function Game.broadcastMessage(message, messageType)
-	if messageType == nil then
+	if not messageType then
 		messageType = MESSAGE_STATUS_WARNING
 	end
 
-	local players = Game.getPlayers()
-	for i = 1, #players do
-		players[i]:sendTextMessage(messageType, message)
+	for _, player in ipairs(Game.getPlayers()) do
+		player:sendTextMessage(messageType, message)
 	end
 end
 
@@ -81,24 +80,24 @@ function Game.getStorageValue(key)
 end
 
 function Game.getReverseDirection(direction)
-	if direction == DIRECTION_WEST then
-		return DIRECTION_EAST
-	elseif direction == DIRECTION_EAST then
-		return DIRECTION_WEST
-	elseif direction == DIRECTION_NORTH then
-		return DIRECTION_SOUTH
-	elseif direction == DIRECTION_SOUTH then
-		return DIRECTION_NORTH
-	elseif direction == DIRECTION_NORTHWEST then
-		return DIRECTION_SOUTHEAST
-	elseif direction == DIRECTION_NORTHEAST then
-		return DIRECTION_SOUTHWEST
-	elseif direction == DIRECTION_SOUTHWEST then
-		return DIRECTION_NORTHEAST
-	elseif direction == DIRECTION_SOUTHEAST then
-		return DIRECTION_NORTHWEST
+	if direction == WEST then
+		return EAST
+	elseif direction == EAST then
+		return WEST
+	elseif direction == NORTH then
+		return SOUTH
+	elseif direction == SOUTH then
+		return NORTH
+	elseif direction == NORTHWEST then
+		return SOUTHEAST
+	elseif direction == NORTHEAST then
+		return SOUTHWEST
+	elseif direction == SOUTHWEST then
+		return NORTHEAST
+	elseif direction == SOUTHEAST then
+		return NORTHWEST
 	end
-	return DIRECTION_NORTH
+	return NORTH
 end
 
 function Game.setStorageValue(key, value)
