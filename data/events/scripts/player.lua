@@ -126,7 +126,77 @@ function Player:onMoveItem(item, count, fromPosition, toPosition)
 	return true
 end
 
+function Player:onItemMoved(item, count, fromPosition, toPosition, fromCylinder, toCylinder)
+end
+
 function Player:onMoveCreature(creature, fromPosition, toPosition)
+	return true
+end
+
+local function hasPendingReport(name, targetName, reportType)
+	local f = io.open(string.format("data/reports/players/%s-%s-%d.txt", name, targetName, reportType), "r")
+	if f then
+		io.close(f)
+		return true
+	else
+		return false
+	end
+end
+
+function Player:onReportRuleViolation(targetName, reportType, reportReason, comment, translation)
+	local name = self:getName()
+	if hasPendingReport(name, targetName, reportType) then
+		self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your report is being processed.")
+		return
+	end
+
+	local file = io.open(string.format("data/reports/players/%s-%s-%d.txt", name, targetName, reportType), "a")
+	if not file then
+		self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "There was an error when processing your report, please contact a gamemaster.")
+		return
+	end
+
+	io.output(file)
+	io.write("------------------------------\n")
+	io.write("Reported by: " .. name .. "\n")
+	io.write("Target: " .. targetName .. "\n")
+	io.write("Type: " .. reportType .. "\n")
+	io.write("Reason: " .. reportReason .. "\n")
+	io.write("Comment: " .. comment .. "\n")
+	if reportType ~= REPORT_TYPE_BOT then
+		io.write("Translation: " .. translation .. "\n")
+	end
+	io.write("------------------------------\n")
+	io.close(file)
+	self:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Thank you for reporting %s. Your report will be processed by %s team as soon as possible.", targetName, configManager.getString(configKeys.SERVER_NAME)))
+	return
+end
+
+function Player:onReportBug(message, position, category)
+	if self:getAccountType() == ACCOUNT_TYPE_NORMAL then
+		return false
+	end
+
+	local name = self:getName()
+	local file = io.open("data/reports/bugs/" .. name .. " report.txt", "a")
+
+	if not file then
+		self:sendTextMessage(MESSAGE_EVENT_DEFAULT, "There was an error when processing your report, please contact a gamemaster.")
+		return true
+	end
+
+	io.output(file)
+	io.write("------------------------------\n")
+	io.write("Name: " .. name)
+	if category == BUG_CATEGORY_MAP then
+		io.write(" [Map position: " .. position.x .. ", " .. position.y .. ", " .. position.z .. "]")
+	end
+	local playerPosition = self:getPosition()
+	io.write(" [Player Position: " .. playerPosition.x .. ", " .. playerPosition.y .. ", " .. playerPosition.z .. "]\n")
+	io.write("Comment: " .. message .. "\n")
+	io.close(file)
+
+	self:sendTextMessage(MESSAGE_EVENT_DEFAULT, "Your report has been sent to " .. configManager.getString(configKeys.SERVER_NAME) .. ".")
 	return true
 end
 
@@ -221,3 +291,33 @@ function Player:onGainSkillTries(skill, tries)
 	end
 	return tries * configManager.getNumber(configKeys.RATE_SKILL)
 end
+
+function Player:onWrapItem(item, position)
+	local topCylinder = item:getTopParent()
+	if not topCylinder then
+		return
+	end
+
+	local tile = Tile(topCylinder:getPosition())
+	if not tile then
+		return
+	end
+
+	if not tile:getHouse() then
+		self:sendCancelMessage("You can only wrap and unwrap this item inside a house.")
+		return
+	end
+
+	local wrapId = item:getAttribute("wrapid")
+	if wrapId == 0 then
+		return
+	end
+
+	local oldId = item:getId()
+	item:remove(1)
+	local item = tile:addItem(wrapId)
+	if item then
+		item:setAttribute("wrapid", oldId)
+	end
+end
+

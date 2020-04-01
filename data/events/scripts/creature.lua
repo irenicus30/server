@@ -3,7 +3,7 @@ function Creature:onChangeOutfit(outfit)
 end
 
 function Creature:onAreaCombat(tile, isAggressive)
-	return true
+	return RETURNVALUE_NOERROR
 end
 
 local function removeCombatProtection(cid)
@@ -35,7 +35,7 @@ end
 
 function Creature:onTargetCombat(target)
 	if not self then
-		return true
+		return RETURNVALUE_NOERROR
 	end
 
 	if target:isPlayer() then
@@ -51,7 +51,7 @@ function Creature:onTargetCombat(target)
 					return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
 				end
 
-				return true
+				return RETURNVALUE_NOERROR
 			end
 
 			if protectionStorage >= os.time() then
@@ -60,5 +60,5 @@ function Creature:onTargetCombat(target)
 		end
 	end
 
-	return true
+	return RETURNVALUE_NOERROR
 end
