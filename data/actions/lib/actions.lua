@@ -1,14 +1,21 @@
 local holeId = {
-	294, 369, 370, 383, 392, 408, 409, 410, 427, 428, 430, 462, 469, 470, 482,
-	484, 485, 489, 924, 3135, 3136, 7933, 7938, 8170, 8286, 8285, 8284, 8281,
-	8280, 8279, 8277, 8276, 8567, 8585, 8596, 8595, 8249, 8250, 8251,
-	8252, 8253, 8254, 8255, 8256, 8592, 8972, 9606, 9625, 13190, 14461, 19519, 21536
+	294, 369, 370, 383, 392, 408, 409, 410, 427, 428, 429, 430, 462, 469, 470, 482,
+	484, 485, 489, 924, 1369, 3135, 3136, 4835, 4837, 7933, 7938, 8170, 8249, 8250,
+	8251, 8252, 8254, 8255, 8256, 8276, 8277, 8279, 8281, 8284, 8285, 8286, 8323,
+	8567, 8585, 8595, 8596, 8972, 9606, 9625, 13190, 14461, 19519, 21536, 23713,
+	26020, 
 }
 
-local holes = {468, 481, 483, 7932}
+local holes = {468, 481, 483, 7932, 23712}
 
-local JUNGLE_GRASS = { 2782, 3985, 19433 }
-local WILD_GROWTH = { 1499, 11099 }
+local wildGrowth = { 1499, 11099 }
+local jungleGrass = {
+	[2782] = 2781,
+	[3985] = 3984,
+	[19433] = 19431
+}
+
+local groundIds = {354, 355}
 
 local fruits = {2673, 2674, 2675, 2676, 2677, 2678, 2679, 2680, 2681, 2682, 2684, 2685, 5097, 8839, 8840, 8841}
 
@@ -85,8 +92,8 @@ local function revertCask(position)
 	end
 end
 
-function onDestroyItem(player, item, fromPosition, target, toPosition, isHotkey)
-	if not target or not target:isItem() then
+function destroyItem(player, target, toPosition)
+	if type(target) ~= "userdata" or not target:isItem() then
 		return false
 	end
 
@@ -143,42 +150,50 @@ function onUseRope(player, item, fromPosition, target, toPosition, isHotkey)
 		return false
 	end
 
-	local targetId = target.itemid
-
 	local tile = Tile(toPosition)
-	local ground = tile:getGround()
-	if ground and isInArray(ropeSpots, ground.itemid) or tile:getItemById(14435) then
-		player:teleportTo(toPosition:moveUpstairs())
+	if not tile then
+		return false
+	end
+	if table.contains(ropeSpots, tile:getGround():getId()) or tile:getItemById(14435) then
+		if Tile(toPosition:moveUpstairs()):hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
+			player:sendCancelMessage(RETURNVALUE_PLAYERISPZLOCKED)
+			return true
+		end
+		player:teleportTo(toPosition, false)
 		if targetId == 8592 then
 			if player:getStorageValue(Storage.RookgaardTutorialIsland.tutorialHintsStorage) < 22 then
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have successfully used your rope to climb out of the hole. Congratulations! Now continue to the east.')
 			end
 		end
 		return true
-	elseif isInArray(holeId, targetId) then
+	elseif table.contains(holeId, target.itemid) then
 		toPosition.z = toPosition.z + 1
 		tile = Tile(toPosition)
 		if tile then
 			local thing = tile:getTopVisibleThing()
+			if thing:isPlayer() then
+				if Tile(toPosition:moveUpstairs()):hasFlag(TILESTATE_PROTECTIONZONE) and thing:isPzLocked() then
+					return false
+				end
+				return thing:teleportTo(toPosition, false)
+			end
 			if thing:isItem() and thing:getType():isMovable() then
 				return thing:moveTo(toPosition:moveUpstairs())
-			elseif thing:isCreature() and thing:isPlayer() then
-				return thing:teleportTo(toPosition:moveUpstairs())
 			end
 		end
-
 		player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
 		return true
 	end
-
 	return false
 end
 
 function onUseShovel(player, item, fromPosition, target, toPosition, isHotkey)
 	local targetId, targetActionId = target.itemid, target.actionid
-	if isInArray(holes, targetId) then
+	if table.contains(holes, targetId) then
 		target:transform(targetId + 1)
 		target:decay()
+		toPosition.z = toPosition.z + 1
+		tile:relocateTo(toPosition)
 
 	elseif isInArray({231, 9059}, targetId) then
 		local rand = math.random(100)
@@ -286,10 +301,28 @@ function onUseShovel(player, item, fromPosition, target, toPosition, isHotkey)
 end
 
 function onUsePick(player, item, fromPosition, target, toPosition, isHotkey)
+	if target.itemid == 11227 then -- shiny stone refining
+		local chance = math.random(1, 100)
+		if chance == 1 then
+			player:addItem(ITEM_CRYSTAL_COIN) -- 1% chance of getting crystal coin
+		elseif chance <= 6 then
+			player:addItem(ITEM_GOLD_COIN) -- 5% chance of getting gold coin
+		elseif chance <= 51 then
+			player:addItem(ITEM_PLATINUM_COIN) -- 45% chance of getting platinum coin
+		else
+			player:addItem(2145) -- 49% chance of getting small diamond
+		end
+		target:getPosition():sendMagicEffect(CONST_ME_BLOCKHIT)
+		target:remove(1)
+		return true
+	end
+
 	local targetId, targetActionId = target.itemid, target.actionid
-	if isInArray({354, 355}, targetId) and (target:hasAttribute(ITEM_ATTRIBUTE_UNIQUEID) or target:hasAttribute(ITEM_ATTRIBUTE_ACTIONID)) then
+	if table.contains(groundIds, targetId) and (target:hasAttribute(ITEM_ATTRIBUTE_UNIQUEID) or target:hasAttribute(ITEM_ATTRIBUTE_ACTIONID)) then
 		target:transform(392)
 		target:decay()
+		toPosition.z = toPosition.z + 1
+		tile:relocateTo(toPosition)
 		toPosition:sendMagicEffect(CONST_ME_POFF)
 
 	elseif targetId == 7200 then
@@ -420,19 +453,24 @@ end
 
 function onUseMachete(player, item, fromPosition, target, toPosition, isHotkey)
 	local targetId = target.itemid
-	if isInArray(JUNGLE_GRASS, targetId) then
-		target:transform(targetId == 19433 and 19431 or targetId - 1)
-		target:decay()
+	if not targetId then
 		return true
 	end
 
-	if isInArray(WILD_GROWTH, targetId) then
+	if table.contains(wildGrowth, targetId) then
 		toPosition:sendMagicEffect(CONST_ME_POFF)
 		target:remove()
 		return true
 	end
 
-	return onDestroyItem(player, item, fromPosition, target, toPosition, isHotkey)
+	local grass = jungleGrass[targetId]
+	if grass then
+		target:transform(grass)
+		target:decay()
+		return true
+	end
+
+	return destroyItem(player, target, toPosition)
 end
 
 function onUseCrowbar(player, item, fromPosition, target, toPosition, isHotkey)
@@ -573,14 +611,19 @@ function onUseScythe(player, item, fromPosition, target, toPosition, isHotkey)
 		return false
 	end
 
-	if target.itemid == 2739 then
+	if target.itemid == 2739 then -- wheat
 		target:transform(2737)
 		target:decay()
-		Game.createItem(2694, 1, toPosition)
+		Game.createItem(2694, 1, toPosition) -- bunch of wheat
 		return true
 	end
-
-	return onDestroyItem(player, item, fromPosition, target, toPosition, isHotkey)
+	if target.itemid == 5465 then -- burning sugar cane
+		target:transform(5464)
+		target:decay()
+		Game.createItem(5467, 1, toPosition) -- bunch of sugar cane
+		return true
+	end
+	return destroyItem(player, target, toPosition)
 end
 
 function onUseKitchenKnife(player, item, fromPosition, target, toPosition, isHotkey)
