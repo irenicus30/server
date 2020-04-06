@@ -9,7 +9,7 @@ bin/
 tmp/
 *.tmp
 *.bak
-*.swp
+*.sw[a-z]
 *~.nib
 local.properties
 .classpath
