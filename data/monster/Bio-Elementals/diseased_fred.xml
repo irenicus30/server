@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<monster name="Diseased Fred" nameDescription="a diseased fred" race="venom" experience="800" speed="150" manacost="0">
-	<health now="1300" max="1300" />
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Diseased Fred" nameDescription="a diseased Fred" race="venom" experience="300" speed="150">
+	<health now="1100" max="1100" />
 	<look type="299" corpse="8951" />
 	<targetchange interval="60000" chance="0" />
 	<flags>
@@ -18,14 +18,14 @@
 		<flag runonhealth="1" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" skill="59" attack="60" poison="4" />
+		<attack name="melee" interval="2000" min="0" max="-207" poison="4" />
 		<attack name="lifedrain" interval="2000" min="-90" max="-140" target="1">
 			<attribute key="areaEffect" value="redshimmer" />
 		</attack>
 		<attack name="physical" interval="1000" chance="40" radius="2" target="0" min="-100" max="-175">
 			<attribute key="shootEffect" value="smallearth" />
 		</attack>
-		<attack name="paralyze" interval="3000" chance="40" target="1">
+		<attack name="speed" interval="3000" chance="40" target="1" speedchange="-900" duration="20000">
 			<attribute key="areaEffect" value="redshimmer" />
 		</attack>
 	</attacks>
@@ -55,15 +55,15 @@
 		<voice sentence="Slurp!" />
 	</voices>
 	<loot>
-		<item id="2148" countmax="65" chance="28000" /><!-- gold coin -->
-		<item id="2148" countmax="64" chance="28000" /><!-- gold coin -->
-		<item id="7591" chance="5500" /><!-- great health potion -->
-		<item id="2647" chance="2000" /><!-- plate legs -->
-		<item id="8473" chance="3500" /><!-- ultimate health potion -->
-		<item id="8472" chance="3500" /><!-- great spirit potion -->
-		<item id="8872" chance="1000" /><!-- belted cape -->
-		<item id="8912" chance="800" /><!-- springsprout rod -->
-		<item id="8873" chance="300" /><!-- hibiscus dress -->
-		<item id="8891" chance="200" /><!-- paladin armor -->
+		<item name="gold coin" countmax="65" chance="28000" />
+		<item name="gold coin" countmax="64" chance="28000" />
+		<item name="plate legs" chance="2000" />
+		<item name="great health potion" chance="5500" />
+		<item name="great spirit potion" chance="3500" />
+		<item name="ultimate health potion" chance="3500" />
+		<item name="belted cape" chance="1000" />
+		<item name="hibiscus dress" chance="300" />
+		<item name="paladin armor" chance="200" />
+		<item name="springsprout rod" chance="800" />
 	</loot>
 </monster>
