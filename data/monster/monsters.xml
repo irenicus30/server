@@ -154,7 +154,7 @@
 	<monster name="Azerus" file="Bosses/azerus.xml" />
 	<monster name="Azerus2" file="Bosses/azerus2.xml" />
 	<monster name="Barbaria" file="Bosses/barbaria.xml" />
-	<monster name="Baron Brute" file="Bosses/baron_brute.xml" /
+	<monster name="Baron Brute" file="Bosses/baron_brute.xml" />
 	<monster name="Bazir" file="bosses/bazir.xml" />
 	<monster name="Bibby Bloodbath" file="Bosses/bibby_bloodbath.xml" />
 	<monster name="Big Boss Trolliver" file="Bosses/big_boss_trolliver.xml" />
