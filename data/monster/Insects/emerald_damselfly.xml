@@ -39,7 +39,7 @@
 		<item name="arrow" countmax="5" chance="7570" />
 		<item name="health potion" chance="1780" />
 		<item name="mana potion" chance="2520" />
-		<item name="insectoid eggs" chance="10830" />
+		<item id="19737" chance="10830" /><!--  insectoid eggs -->
 		<item name="marsh stalker feather" chance="8610" />
 	</loot>
 </monster>
