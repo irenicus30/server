@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Pale Count" nameDescription="The Pale Count" race="blood" experience="18000" speed="300" manacost="0">
-	<health now="20000" max="20000" />
+<monster name="The Pale Count" nameDescription="The Pale Count" race="blood" experience="28000" speed="300">
+	<health now="50000" max="50000" />
 	<look type="558" corpse="21279" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
@@ -17,7 +17,7 @@
 		<flag runonhealth="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" skill="80" attack="120" />
+		<attack name="melee" interval="2000" min="0" max="-540" />
 		<attack name="speed" interval="1000" chance="17" range="7" radius="4" target="1" speedchange="-600" duration="1500">
 		</attack>
 		<attack name="ice" interval="2000" chance="21" range="6" radius="2" target="1" min="-130" max="-350">
@@ -45,7 +45,7 @@
 	<summons maxSummons="4">
 		<summon name="Nightfiend" interval="2000" chance="10" />
 	</summons>
-	<voices interval="2000" chance="7">
+	<voices interval="5000" chance="10">
 		<voice sentence="Feel the hungry kiss of death!" />
 		<voice sentence="The monsters in the mirror will come eat your dreams." />
 		<voice sentence="Your pitiful life has come to an end!" />
