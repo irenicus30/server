@@ -751,7 +751,6 @@
 	<monster name="Stalker" file="Outlaws/stalker.xml" />
 	<monster name="Thief" file="Outlaws/thief.xml" />
 	<monster name="Travelling Merchant" file="Outlaws/travelling_merchant.xml" />
-	<monster name="Werewolf" file="Outlaws/werewolf.xml" />
 	<monster name="Wild Warrior" file="Outlaws/wild_warrior.xml" />
 
 	<!-- Pharaohs -->
@@ -901,8 +900,8 @@
 	<monster name="Dromedary" file="Ungulates/dromedary.xml" />
 	<monster name="Elephant" file="Ungulates/elephant.xml" />
 	<monster name="Enraged White Deer" file="Ungulates/enraged_white_deer.xml" />>
-	<monster name="Evil Sheep" file="Ungulates/evil_sheep.xml" />
 	<monster name="Evil Sheep Lord" file="Ungulates/evil_sheep_lord.xml" />
+	<monster name="Evil Sheep" file="Ungulates/evil_sheep.xml" />
 	<monster name="Horse" file="Ungulates/horse.xml" />
 	<monster name="Horse1" file="Ungulates/horse(brown).xml" />
 	<monster name="Horse2" file="Ungulates/horse(fire).xml" />
