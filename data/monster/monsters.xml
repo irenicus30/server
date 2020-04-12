@@ -188,6 +188,7 @@
 	<monster name="Fernfang" file="bosses/fernfang.xml" />
 	<monster name="Fernfang" file="Bosses/fernfang.xml" />
 	<monster name="Ferumbras" file="Bosses/ferumbras.xml" />
+	<monster name="Flameborn" file="Bosses/flameborn.xml" />
 	<monster name="Fleshslicer" file="Bosses/fleshslicer.xml" />
 	<monster name="Fluffy" file="Bosses/fluffy.xml" />
 	<monster name="Foreman Kneebiter" file="Bosses/foreman_kneebiter.xml" />
@@ -584,7 +585,6 @@
 	<monster name="Butterfly" file="Insects/butterfly.xml" />
 	<monster name="Cockroach" file="Insects/cockroach.xml" />
 	<monster name="Emerald Damselfly" file="Insects/emerald_damselfly.xml" />
-	<monster name="Fleshslicer" file="Insects/fleshslicer.xml" />
 	<monster name="Hive Overseer" file="Insects/hive_overseer.xml" />
 	<monster name="Insect Swarm" file="Insects/insect_swarm.xml" />
 	<monster name="Insectoid Scout" file="Insects/insectoid_scout.xml" />
@@ -602,8 +602,8 @@
 	<monster name="Scarab" file="Insects/scarab.xml" />
 	<monster name="Spidris" file="Insects/spidris.xml" />
 	<monster name="Spidris Elite" file="Insects/spidris_elite.xml" />
-	<monster name="Swarmer" file="Insects/swarmer.xml" />
 	<monster name="Swarmer Hatchling" file="Insects/swarmer_hatchling.xml" />
+	<monster name="Swarmer" file="Insects/swarmer.xml" />
 	<monster name="Terramite" file="Insects/terramite.xml" />
 	<monster name="Wasp" file="Insects/wasp.xml" />
 	<monster name="Waspoid" file="Insects/waspoid.xml" />
@@ -654,7 +654,6 @@
 	<monster name="Depowered Minotaur" file="Minotaurs/depowered_minotaur.xml" />
 	<monster name="Execowtioner" file="Minotaurs/execowtioner.xml" />
 	<monster name="Glooth Powered Minotaur" file="Minotaurs/glooth_powered_minotaur.xml" />
-	<monster name="Minotaur" file="Minotaurs/minotaur.xml" />
 	<monster name="Minotaur Amazon" file="Minotaurs/minotaur_amazon.xml" />
 	<monster name="Minotaur Archer" file="Minotaurs/minotaur_archer.xml" />
 	<monster name="Minotaur Bruiser" file="Minotaurs/minotaur_bruiser.xml" />
@@ -665,6 +664,7 @@
 	<monster name="Minotaur Occultist" file="Minotaurs/minotaur_occultist.xml" />
 	<monster name="Minotaur Poacher" file="Minotaurs/minotaur_poacher.xml" />
 	<monster name="Minotaur Totem" file="Minotaurs/minotaur_totem.xml" />
+	<monster name="Minotaur" file="Minotaurs/minotaur.xml" />
 	<monster name="Mooh'Tah Warrior" file="Minotaurs/mooh'tah_warrior.xml" />
 	<monster name="Moohtant" file="Minotaurs/moohtant.xml" />
 	<monster name="Worm Priestess" file="Minotaurs/worm_priestess.xml" />
@@ -698,7 +698,7 @@
 	<!-- Myriapods -->
 	<monster name="Centipede" file="Myriapods/centipede.xml" />
 	<monster name="Crawler" file="Myriapods/crawler.xml" />
-	<monster name="Spitter" file="Insects/spitter.xml" />
+	<monster name="Spitter" file="Myriapods/spitter.xml" />
 	<monster name="Wiggler" file="Myriapods/wiggler.xml" />
 
 	<!-- Necromancers -->

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<monster name="Overcharged Energy Elemental" nameDescription="an orvercharged energy elemental" race="undead" experience="1300" speed="300" manacost="0">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Overcharged Energy Elemental" nameDescription="an orvercharged energy elemental" race="undead" experience="1300" speed="300">
 	<health now="1700" max="1700" />
 	<look type="290" corpse="8966" />
 	<targetchange interval="20000" chance="15" />
@@ -18,7 +18,7 @@
 		<flag runonhealth="1" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" skill="40" attack="80" />
+		<attack name="melee" interval="2000" min="0" max="-200" />
 		<attack name="energy" interval="1000" chance="11" target="0" radius="4" min="0" max="-250">
 			<attribute key="shootEffect" value="energy" />
 			<attribute key="areaEffect" value="purpleenergy" />
@@ -43,15 +43,15 @@
 		<immunity energy="1" />
 		<immunity fire="1" />
 	</immunities>
-	<voices interval="2000" chance="7">
+	<voices interval="5000" chance="10">
 		<voice sentence="BZZZZZZZZZZ" />
 	</voices>
 	<loot>
-		<item id="2148" countmax="100" chance="50000" /><!-- gold coin -->
-		<item id="2148" countmax="56" chance="50000" /><!-- gold coin -->
-		<item id="8303" chance="14285" /><!-- energy soil -->
-		<item id="7591" chance="10000" /><!-- great health potion -->
-		<item id="2150" countmax="2" chance="10000" /><!-- small amethyst -->
-		<item id="7439" chance="2173" /><!-- berserk potion -->
+		<item name="gold coin" countmax="100" chance="50000" />
+		<item name="gold coin" countmax="56" chance="50000" />
+		<item name="small amethyst" countmax="2" chance="10000" />
+		<item name="berserk potion" chance="2173" />
+		<item name="great health potion" chance="10000" />
+		<item name="energy soil" chance="14285" />
 	</loot>
 </monster>
